@@ -1,0 +1,4 @@
+#chatview-container {
+    height: 18rem;
+    overflow-y: scroll;
+}
