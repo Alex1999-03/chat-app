@@ -2,9 +2,11 @@
 
 1. Requisito, tener instalado Nodejs.
 
-2. Abrir linea de comandos, cmd, powershell o terminal que posea.
+2. Restaurar base de datos.
 
-3. Ir a la carpeta server.
+3. Abrir linea de comandos, cmd, powershell o terminal que posea.
+
+4. Ir a la carpeta server.
 
 ~~~
 cd server
