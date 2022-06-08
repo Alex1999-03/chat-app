@@ -28,7 +28,7 @@ npm start
 7. Ir a la carpeta client.
 
 ~~~
-cd server
+cd client
 ~~~
 
 8. Ejecutar el siguiente comando.
