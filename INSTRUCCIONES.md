@@ -1,8 +1,8 @@
 # Intrucciones
 
-1. Requisito, tener instalado Nodejs.
+1. Requisito, tener instalado Nodejs y PostgreSQL.
 
-2. Restaurar base de datos.
+2. Restaurar base de datos, el nombre de la base de datos debe ser chat_db.
 
 3. Abrir linea de comandos, cmd, powershell o terminal que posea.
 
