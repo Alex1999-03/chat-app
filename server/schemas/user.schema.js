@@ -27,6 +27,7 @@ const editUserSchema = Joi.object({
   firstName,
   lastName,
   email,
+  password
 });
 
 const changePasswordSchema = Joi.object({

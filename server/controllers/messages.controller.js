@@ -1,7 +1,6 @@
 const { io } = require('../libs/socketio');
 const passport = require('passport');
-const { models } = require('../libs/sequelize');
-const { User } = require('../libs/sequelize/models/user.model');
+const { getMessages, getMessageById, createMessage, updateMessage, deleteMessage } = require("../services/message.service");
 const {
     getMessageSchema,
     createMessageSchema,
@@ -16,25 +15,7 @@ router.get('/',
 // passport.authenticate('jwt', { session: false }),
 async (req, res, next) => {
     try {
-        let messages = await models.Message.findAll({
-            order: [
-                ['createdAt', 'ASC']
-            ],
-            include: [{
-                model: User,
-                as: "user"
-            }]
-        });
-        messages = messages.map((message) => {
-            return {
-                id: message.id,
-                text: message.text,
-                createdAt: message.createdAt,
-                userId: message.userId,
-                firstName: message.user.firstName,
-                lastName: message.user.lastName
-            }
-        });
+        let messages = await getMessages();
         res.status(200).json(messages);
     } catch (error) {
         next(error);
@@ -46,7 +27,7 @@ router.get('/:id',
     async (req, res, next) => {
         try {
             const { id } = req.params;
-            const message = await models.Message.findByPk(id);
+            const message = await getMessageById(id);
             if (!message) {
                 boom.notFound('Message not found.');
             }
@@ -60,8 +41,8 @@ router.post('/',
     validatorHandler(createMessageSchema, 'body'),
     async (req, res, next) => {
         try {
-            let newMessage = await models.Message.create(req.body);
-            const user = await models.User.findByPk(req.body.userId);
+            let newMessage = await createMessage(req.body);
+            const user = await getMessageById(req.body.userId);
             newMessage = {
                 id: newMessage.id,
                 text: newMessage.text,
@@ -83,11 +64,11 @@ router.put('/:id',
     async (req, res, next) => {
         try {
             const { id } = req.params;
-            const editedMessage = await models.Message.findByPk(id);
+            let editedMessage = await getMessageById(id);
             if (!editedMessage) {
                 throw boom.notFound('Message not found.');
             }
-            editedMessage.update(req.body);
+            editedMessage = await updateMessage(editedMessage, req.body);
             res.status(200).json(editedMessage);
         } catch (error) {
             next(error);
@@ -99,11 +80,11 @@ router.delete('/:id',
     async (req, res, next) => {
         try {
             const { id } = req.params;
-            const message = await models.Message.findByPk(id);
+            const message = await getMessageById(id);
             if (!message) {
                 throw boom.notFound('Message not found.');
             }
-            message.destroy();
+            await deleteMessage(message);
             res.status(200).json({ id: req.params.id })
         } catch (error) {
             next(error);
