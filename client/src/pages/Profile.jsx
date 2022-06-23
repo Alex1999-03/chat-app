@@ -16,17 +16,21 @@ import AlertMessage from "../components/AlertMessage";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { useFormik } from "formik";
 import EditUserSchema from "../schema/EditUser.Schema";
-import { useAuth } from "../contexts/auth.context";
 import { useState } from "react";
+import useGetUser from "../hooks/useGetUser";
+import useEditUser from "../hooks/useEditUser";
 
 export default function Profile() {
-  const { auth } = useAuth();
   const [open, setOpen] = useState(false);
   const [disable, setDisable] = useState(true);
+  const { user, setUser } = useGetUser();
+  const { onEditUser } = useEditUser();
 
-  const onEditUser = () => {
-    console.log("Usuario editado");
-  };
+  const onSubmit = async (values) => {
+    const editedUser = await onEditUser(values);
+    setUser(editedUser);
+    handleDisable();
+  }
 
   const handleDisable = () => {
     setDisable((prevState) => !prevState);
@@ -38,9 +42,13 @@ export default function Profile() {
 
   const formik = useFormik({
     enableReinitialize: true,
-    initialValues: {getInitialValues},
+    initialValues: {
+      firstName: user?.firstName || "",
+      lastName: user?.lastName || "",
+      email: user?.email || ""
+    },
     validationSchema: EditUserSchema,
-    onSubmit: onEditUser,
+    onSubmit: onSubmit,
   });
 
   return (
@@ -48,7 +56,7 @@ export default function Profile() {
       <Paper elevation={5}>
         <Box
           sx={{
-            marginTop: 10,
+            marginTop: 5,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -78,6 +86,7 @@ export default function Profile() {
                     formik.touched.firstName && formik.errors.firstName
                   }
                   disabled={disable}
+                  InputLabelProps={{ shrink: true }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -92,6 +101,7 @@ export default function Profile() {
                   }
                   helperText={formik.touched.lastName && formik.errors.lastName}
                   disabled={disable}
+                  InputLabelProps={{ shrink: true }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -105,6 +115,7 @@ export default function Profile() {
                   error={formik.touched.email && Boolean(formik.errors.email)}
                   helperText={formik.touched.email && formik.errors.email}
                   disabled={disable}
+                  InputLabelProps={{ shrink: true }}
                 />
               </Grid>
             </Grid>

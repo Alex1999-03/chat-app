@@ -32,18 +32,17 @@ router.get(
 );
 
 router.put(
-  ":id",
+  "/:id",
   validatorHandler(getUserSchema, "params"),
   validatorHandler(editUserSchema, "body"),
   async (req, res, next) => {
     try {
         const { id } = req.params;
         let user = await getUserById(id);
-
         if(!user) {
             throw boom.notFound("El usuario no existe.");
         }
-        user = await updateUser(user);
+        user = await updateUser(user, req.body);
         res.status(200).json(user);
 
     } catch (error) {
