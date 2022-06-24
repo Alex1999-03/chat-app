@@ -65,7 +65,7 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Registrar
           </Typography>
 
           <Box component={"form"} onSubmit={formik.handleSubmit} sx={{ mt: 3 }}>
