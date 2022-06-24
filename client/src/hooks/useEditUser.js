@@ -13,6 +13,11 @@ const useEditUser = () => {
           email: values.email,
         }),
       });
+
+      if(response.status === 409) {
+        return null;
+      }
+      
       return response.json();
     }
   };

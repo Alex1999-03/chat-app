@@ -13,7 +13,7 @@ const useGetUser = () => {
       .then((res) => {
         setUser(res);
       });
-  }, [auth.user.id]);
+  }, []);
 
   return { user, setUser };
 };

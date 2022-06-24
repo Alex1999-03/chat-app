@@ -16,9 +16,9 @@ import AlertMessage from "../components/AlertMessage";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { useFormik } from "formik";
 import EditUserSchema from "../schema/EditUser.Schema";
-import { useState } from "react";
 import useGetUser from "../hooks/useGetUser";
 import useEditUser from "../hooks/useEditUser";
+import { useState } from "react";
 
 export default function Profile() {
   const [open, setOpen] = useState(false);
@@ -28,9 +28,14 @@ export default function Profile() {
 
   const onSubmit = async (values) => {
     const editedUser = await onEditUser(values);
-    setUser(editedUser);
-    handleDisable();
-  }
+
+    if (!editedUser) {
+      setOpen(true);
+    } else {
+      setUser(editedUser);
+      handleDisable();
+    }
+  };
 
   const handleDisable = () => {
     setDisable((prevState) => !prevState);
@@ -45,7 +50,7 @@ export default function Profile() {
     initialValues: {
       firstName: user?.firstName || "",
       lastName: user?.lastName || "",
-      email: user?.email || ""
+      email: user?.email || "",
     },
     validationSchema: EditUserSchema,
     onSubmit: onSubmit,
