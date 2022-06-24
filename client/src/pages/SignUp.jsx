@@ -75,7 +75,7 @@ export default function SignUp() {
                   fullWidth
                   autoFocus
                   name="firstName"
-                  label="First Name"
+                  label="Nombre"
                   value={formik.values.firstName}
                   onChange={formik.handleChange}
                   error={
@@ -90,7 +90,7 @@ export default function SignUp() {
                 <TextField
                   fullWidth
                   name="lastName"
-                  label="Last Name"
+                  label="Apellido"
                   value={formik.values.lastName}
                   onChange={formik.handleChange}
                   error={
