@@ -132,7 +132,7 @@ export default function SignUp() {
               variant={"contained"}
               sx={{ my: 6 }}
             >
-              Sign Up
+              Registrar
             </Button>
           </Box>
         </Box>
