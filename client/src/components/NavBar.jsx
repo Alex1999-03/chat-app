@@ -31,7 +31,7 @@ export default function NavBar() {
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             <Link to={"/"} style={{ textDecoration: "none", color: "#EEE" }}>
-              ChatApp
+              Chat App
             </Link>
           </Typography>
 
@@ -43,13 +43,13 @@ export default function NavBar() {
 
           {!auth && (
             <Button color="inherit" onClick={onSignIn}>
-              Sign In
+              Iniciar Sesión
             </Button>
           )}
 
           {!auth && (
             <Button color="inherit" onClick={onSignUp}>
-              Sign Up
+              Registrar
             </Button>
           )}
 
