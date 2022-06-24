@@ -81,7 +81,7 @@ export default function Profile() {
                   fullWidth
                   autoFocus
                   name="firstName"
-                  label="First Name"
+                  label="Nombre"
                   value={formik.values.firstName}
                   onChange={formik.handleChange}
                   error={
@@ -97,7 +97,7 @@ export default function Profile() {
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  name="lastName"
+                  name="Apellido"
                   label="Last Name"
                   value={formik.values.lastName}
                   onChange={formik.handleChange}
