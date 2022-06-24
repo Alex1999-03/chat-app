@@ -102,7 +102,7 @@ export default function SignIn() {
               variant={"contained"}
               sx={{ my: 6 }}
             >
-              Sign In
+              Iniciar Sesión
             </Button>
           </Box>
         </Box>
