@@ -97,8 +97,8 @@ export default function Profile() {
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  name="Apellido"
-                  label="Last Name"
+                  name="lastName"
+                  label="Apellido"
                   value={formik.values.lastName}
                   onChange={formik.handleChange}
                   error={

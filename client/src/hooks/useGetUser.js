@@ -8,12 +8,15 @@ const useGetUser = () => {
   useEffect(() => {
     fetch(`http://localhost:8080/users/${auth.user.id}`, {
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${auth.token}`,
+      },
     })
       .then((res) => res.json())
       .then((res) => {
         setUser(res);
       });
-  }, [auth.user.id]);
+  }, [auth.user.id, auth.token]);
 
   return { user, setUser };
 };

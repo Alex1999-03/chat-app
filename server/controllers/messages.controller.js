@@ -1,5 +1,3 @@
-const { io } = require("../libs/socketio");
-const passport = require("passport");
 const {
   getMessages,
   getMessageById,
@@ -7,20 +5,22 @@ const {
   updateMessage,
   deleteMessage,
 } = require("../services/message.service");
-const { getUserById } = require("../services/user.service");
 const {
   getMessageSchema,
   createMessageSchema,
   editMessageSchema,
 } = require("../schemas/message.schema");
+const { getUserById } = require("../services/user.service");
+const { io } = require("../libs/socketio");
 const validatorHandler = require("../middlewares/validator.handler");
+const passport = require("passport");
 const boom = require("@hapi/boom");
 const express = require("express");
 const router = express.Router();
 
 router.get(
   "/",
-  // passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }),
   async (req, res, next) => {
     try {
       let messages = await getMessages();
@@ -33,6 +33,7 @@ router.get(
 
 router.get(
   "/:id",
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(getMessageSchema, "params"),
   async (req, res, next) => {
     try {
@@ -50,6 +51,7 @@ router.get(
 
 router.post(
   "/",
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(createMessageSchema, "body"),
   async (req, res, next) => {
     try {
@@ -73,6 +75,7 @@ router.post(
 
 router.put(
   "/:id",
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(getMessageSchema, "params"),
   validatorHandler(editMessageSchema, "body"),
   async (req, res, next) => {
@@ -92,6 +95,7 @@ router.put(
 
 router.delete(
   "/:id",
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(getMessageSchema, "params"),
   async (req, res, next) => {
     try {
